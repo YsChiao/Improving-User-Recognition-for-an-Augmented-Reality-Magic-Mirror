@@ -75,11 +75,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="test2.cpp" />
+    <ClCompile Include="Volume.cpp" />
     <ClCompile Include="MultiThread.cpp" />
     <ClCompile Include="openni.cpp" />
     <ClCompile Include="OpenNIShow.cpp" />
     <ClCompile Include="test.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="volume.bin" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
