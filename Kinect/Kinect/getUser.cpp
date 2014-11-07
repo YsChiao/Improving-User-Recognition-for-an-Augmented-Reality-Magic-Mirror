@@ -25,6 +25,7 @@ using namespace std;
 using namespace openni;
 using namespace nite;
 
+
 int main( int argc, char **argv )
 {
 
@@ -33,7 +34,8 @@ int main( int argc, char **argv )
 
 	// o3. Open Device
 	Device  mDevice;
-	mDevice.open( "depth1.oni" );
+	//mDevice.open( "depth1.oni" );
+	mDevice.open(ANY_DEVICE);
 
 	// o4. create depth stream
 	VideoStream mDepthStream;
@@ -59,7 +61,8 @@ int main( int argc, char **argv )
 
 	// o6. image registration
 	mDevice.setImageRegistrationMode( IMAGE_REGISTRATION_DEPTH_TO_COLOR );
-    
+
+
 
 	// Initial NiTE
 	if( NiTE::initialize() != nite::Status::STATUS_OK )
@@ -98,6 +101,8 @@ int main( int argc, char **argv )
 		UserTrackerFrameRef	mUserFrame;
 		if( mUserTracker.readFrame( &mUserFrame )== nite::Status::STATUS_OK )
 		{
+			const nite::Array<nite::UserData>& users = mUserFrame.getUsers();
+
 			// get depth data and convert to OpenCV format
 			openni::VideoFrameRef vfDepthFrame = mUserFrame.getDepthFrame();
 			const cv::Mat mImageDepth( vfDepthFrame.getHeight(), vfDepthFrame.getWidth(), CV_16UC1, const_cast<void*>( vfDepthFrame.getData() ) );
@@ -109,24 +114,74 @@ int main( int argc, char **argv )
 			cv::Mat mImageBGR;
 			cv::cvtColor( mScaledDepth, mImageBGR, CV_GRAY2BGR );
 
+
 			// get user map
 			const UserMap&	rUserMap = mUserFrame.getUserMap();
 			const UserId*	pUserMapData = rUserMap.getPixels();
 
-			// draw user pixels
-			for( int y = 0; y < rUserMap.getHeight(); ++ y )
+			//get frame floor
+			Plane floorCoords;
+			NitePoint3f floorPoint;
+
+			floorCoords = mUserFrame.getFloor();
+			floorPoint = floorCoords.point;
+			//cout << floorCoords.normal.x << " " << floorCoords.normal.y << " " << floorCoords.normal.z << endl;
+			//cout << floorCoords.point.x  << " " << floorCoords.point.y  << " " << floorCoords.point.z  << "\n" << endl;
+
+
+			int count = 0;
+			for (int i = 0 ; i < users.getSize(); ++i)
 			{
-				for( int x = 0; x < rUserMap.getWidth(); ++ x )
+				//cout << "User: " << users[i].getId() << endl;
+
+				nite::BoundingBox userbb = users[i].getBoundingBox();
+				
+				// draw BoundingBox line 
+				float minPosX = userbb.min.x;
+				float maxPosX = userbb.max.x;
+				float minPosY = userbb.min.y;
+				float maxPosY = userbb.max.y;
+
+				//cout << minPosX << " " << minPosY << " " << userbb.min.z << endl;
+				//cout << maxPosY - minPosY << endl; // height of pixels;
+
+				cv::Point2f a(minPosX, minPosY), b(maxPosX, minPosY), c(minPosX, maxPosY), d(maxPosX, maxPosY);
+				line(mImageBGR, a, b, cv::Scalar(255,0,0));
+				line(mImageBGR, b, d, cv::Scalar(255,0,0));
+				line(mImageBGR, d, c, cv::Scalar(255,0,0));
+				line(mImageBGR, c, a, cv::Scalar(255,0,0));
+
+				// draw user pixels
+				for( int y = 0; y < rUserMap.getHeight(); ++ y )
 				{
-					const UserId& rUserID = pUserMapData[ x + y * rUserMap.getWidth() ];
-					if( rUserID != 0 )
-						mImageBGR.at<cv::Vec3b>( y, x ) = aUserColor[ rUserID % 8 ];
+					for( int x = 0; x < rUserMap.getWidth(); ++ x )
+					{
+						const UserId& rUserID = pUserMapData[ x + y * rUserMap.getWidth() ];
+						if( rUserID != 0 ) 
+						{
+							mImageBGR.at<cv::Vec3b>( y, x ) = aUserColor[ rUserID % 8 ];
+
+							if(count == 0)
+							{
+								const DepthPixel* pDepthArray = (const DepthPixel*)vfDepthFrame.getData();
+								int idx = x + y * vfDepthFrame.getWidth();
+								const DepthPixel&  rDepth = pDepthArray[idx];
+								float fX, fY, fZ; 
+								CoordinateConverter::convertDepthToWorld( mDepthStream, x, y, rDepth, &fX, &fY, &fZ );
+								//cout << fX << " " << fY << " " << fZ << endl;
+								//show the height
+								cout << abs( fY - floorCoords.point.y )<< endl; 
+							}
+							count ++;
+						}
+
+					}
 				}
 			}
 
 			// show image
 			cv::imshow( "User Image", mImageBGR );
-
+			cv::waitKey(300);
 			mUserFrame.release();
 		}
 		else
@@ -134,10 +189,8 @@ int main( int argc, char **argv )
 			cerr << "Can't get user frame" << endl;
 		}
 
-		// check keyboard
-		if( cv::waitKey( 1 ) == 'q' )
-			break;
 	}
+
 
 	// stop
 	mUserTracker.destroy();
