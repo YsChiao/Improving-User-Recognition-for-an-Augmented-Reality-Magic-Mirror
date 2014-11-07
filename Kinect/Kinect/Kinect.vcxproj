@@ -75,6 +75,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="getUser.cpp" />
+    <ClCompile Include="height.cpp" />
     <ClCompile Include="test2.cpp" />
     <ClCompile Include="Volume.cpp" />
     <ClCompile Include="MultiThread.cpp" />
@@ -83,6 +85,9 @@
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="depth1.oni" />
+    <None Include="depth2.oni" />
+    <None Include="depth3.oni" />
     <None Include="volume.bin" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

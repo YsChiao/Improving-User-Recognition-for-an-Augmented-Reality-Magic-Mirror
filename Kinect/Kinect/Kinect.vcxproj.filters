@@ -39,9 +39,24 @@
     <ClCompile Include="test2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="height.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="getUser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="volume.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="depth1.oni">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="depth2.oni">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="depth3.oni">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
