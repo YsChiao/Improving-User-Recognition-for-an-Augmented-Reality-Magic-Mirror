@@ -94,6 +94,10 @@ int main( int argc, char **argv )
 	aUserColor[6] = cv::Vec3b( 255, 255, 255 );
 	aUserColor[7] = cv::Vec3b( 0, 0, 0 );
 
+
+	int count = 0; // take the firt entry of the depth image
+	int frame = 0; // take the entry of the frame image
+
 	// start
 	while( true )
 	{
@@ -128,14 +132,12 @@ int main( int argc, char **argv )
 			//cout << floorCoords.normal.x << " " << floorCoords.normal.y << " " << floorCoords.normal.z << endl;
 			//cout << floorCoords.point.x  << " " << floorCoords.point.y  << " " << floorCoords.point.z  << "\n" << endl;
 
-
-			int count = 0;
 			for (int i = 0 ; i < users.getSize(); ++i)
 			{
-				//cout << "User: " << users[i].getId() << endl;
-
-				nite::BoundingBox userbb = users[i].getBoundingBox();
+				frame ++;
 				
+				nite::BoundingBox userbb = users[i].getBoundingBox();
+
 				// draw BoundingBox line 
 				float minPosX = userbb.min.x;
 				float maxPosX = userbb.max.x;
@@ -151,30 +153,34 @@ int main( int argc, char **argv )
 				line(mImageBGR, d, c, cv::Scalar(255,0,0));
 				line(mImageBGR, c, a, cv::Scalar(255,0,0));
 
-				// draw user pixels
-				for( int y = 0; y < rUserMap.getHeight(); ++ y )
+
+				if ( frame == 20 ) // get the 20th frame 
 				{
-					for( int x = 0; x < rUserMap.getWidth(); ++ x )
+					// draw user pixels
+					for( int y = 0; y < rUserMap.getHeight(); ++ y )
 					{
-						const UserId& rUserID = pUserMapData[ x + y * rUserMap.getWidth() ];
-						if( rUserID != 0 ) 
+						for( int x = 0; x < rUserMap.getWidth(); ++ x )
 						{
-							mImageBGR.at<cv::Vec3b>( y, x ) = aUserColor[ rUserID % 8 ];
-
-							if(count == 0)
+							const UserId& rUserID = pUserMapData[ x + y * rUserMap.getWidth() ];
+							if( rUserID != 0 ) 
 							{
-								const DepthPixel* pDepthArray = (const DepthPixel*)vfDepthFrame.getData();
-								int idx = x + y * vfDepthFrame.getWidth();
-								const DepthPixel&  rDepth = pDepthArray[idx];
-								float fX, fY, fZ; 
-								CoordinateConverter::convertDepthToWorld( mDepthStream, x, y, rDepth, &fX, &fY, &fZ );
-								//cout << fX << " " << fY << " " << fZ << endl;
-								//show the height
-								cout << abs( fY - floorCoords.point.y )<< endl; 
-							}
-							count ++;
-						}
+								mImageBGR.at<cv::Vec3b>( y, x ) = aUserColor[ rUserID % 8 ];
 
+								if(count == 0)
+								{
+									const DepthPixel* pDepthArray = (const DepthPixel*)vfDepthFrame.getData();
+									int idx = x + y * vfDepthFrame.getWidth();
+									const DepthPixel&  rDepth = pDepthArray[idx];
+									float fX, fY, fZ; 
+									CoordinateConverter::convertDepthToWorld( mDepthStream, x, y, rDepth, &fX, &fY, &fZ );
+									//cout << fX << " " << fY << " " << fZ << endl;
+									//show the height
+									cout << "User " << i << " Height: "<< abs( fY - floorCoords.point.y )<< endl; 
+								}
+								count ++;
+							}
+
+						}
 					}
 				}
 			}
