@@ -75,14 +75,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="getUser.cpp" />
     <ClCompile Include="height.cpp" />
-    <ClCompile Include="test2.cpp" />
-    <ClCompile Include="Volume.cpp" />
     <ClCompile Include="MultiThread.cpp" />
     <ClCompile Include="openni.cpp" />
     <ClCompile Include="OpenNIShow.cpp" />
     <ClCompile Include="test.cpp" />
+    <ClCompile Include="volume.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="depth1.oni" />

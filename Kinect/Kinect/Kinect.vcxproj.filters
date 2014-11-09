@@ -33,16 +33,10 @@
     <ClCompile Include="OpenNIShow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Volume.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="test2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="height.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="getUser.cpp">
+    <ClCompile Include="volume.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
