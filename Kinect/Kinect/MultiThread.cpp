@@ -283,7 +283,7 @@ unsigned int __stdcall Height (PVOID pM)
 	
 	// start
 	while(true)
-	{
+	{   start:
 		if( mUserTracker.readFrame( &mUserFrame )== nite::Status::STATUS_OK )
 		{
 			const nite::Array<nite::UserData>& users = mUserFrame.getUsers();
@@ -309,6 +309,7 @@ unsigned int __stdcall Height (PVOID pM)
 			//cout << floorCoords.normal.x << " " << floorCoords.normal.y << " " << floorCoords.normal.z << endl;
 			//cout << floorCoords.point.x  << " " << floorCoords.point.y  << " " << floorCoords.point.z  << "\n" << endl;
 
+			restart:
 			for (int i = 0 ; i < users.getSize(); ++i)
 			{
 				frame ++;
@@ -352,6 +353,12 @@ unsigned int __stdcall Height (PVOID pM)
 									CoordinateConverter::convertDepthToWorld( oniDepthStream, x, y, rDepth, &fX, &fY, &fZ );
 									//cout << fX << " " << fY << " " << fZ << endl;
 									//show the height
+									if (fY == 0)
+									{
+										cout << "Height failed, try again"<< endl;
+										frame = 0;
+										goto restart;
+									}
 									cout << "Height: " << abs( fY - floorCoords.point.y )<< endl; 
 									return 0;
 								}
@@ -455,7 +462,7 @@ unsigned int __stdcall OpenNIShow (PVOID pM)
 
 unsigned int __stdcall ReconstructMe (PVOID pM)
 //int ReconstructMe()
-{
+{    
 	// initialize ReconstructMe
 	// Create ReconstructMe context
 	reme_context_t c;
@@ -566,14 +573,15 @@ unsigned int __stdcall ReconstructMe (PVOID pM)
 		}
 		else
 		{
-			cout << "tracking failed !!!" << endl;
-			cout << "Reconstruction is done. " << endl;
+			cout << "Tracking failed !!!" << endl;
+			//cout << "Reconstruction is done. " << endl;
 
 			// Close and destroy the sensor, it is not needed anymore
 			reme_sensor_close(c, s);
 			reme_sensor_destroy(c, &s);
 			reme_context_destroy(&c);
 			return(-1);
+
 		}
 		//reme_sensor_get_image(c, s, REME_IMAGE_AUX, aux);
 		reme_sensor_get_image(c, s, REME_IMAGE_VOLUME, volume);
@@ -654,7 +662,7 @@ int main (int argc, char** argv)
 
 			HANDLE handleD = (HANDLE)_beginthreadex(NULL, 0, GenderAge, NULL, 0, NULL); // detecting the gender and age
 
-			//HANDLE handleE = (HANDLE)_beginthreadex(NULL, 0, ReconstructMe, NULL, 0, NULL); // detecting the gender and age
+			HANDLE handleE = (HANDLE)_beginthreadex(NULL, 0, ReconstructMe, NULL, 0, NULL); // detecting the gender and age
 
 			HANDLE handleF = (HANDLE)_beginthreadex(NULL, 0, Height, NULL, 0, NULL); // detecting the height
 
