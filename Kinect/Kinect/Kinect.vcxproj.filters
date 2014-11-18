@@ -41,9 +41,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="volume.bin">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="depth1.oni">
       <Filter>Resource Files</Filter>
     </None>

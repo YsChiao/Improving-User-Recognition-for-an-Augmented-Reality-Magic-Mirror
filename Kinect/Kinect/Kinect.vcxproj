@@ -86,7 +86,6 @@
     <None Include="depth1.oni" />
     <None Include="depth2.oni" />
     <None Include="depth3.oni" />
-    <None Include="volume.bin" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

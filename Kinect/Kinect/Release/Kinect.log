@@ -1,4 +1,4 @@
-﻿Build started 11/17/2014 12:16:11 PM.
+﻿Build started 11/17/2014 7:14:41 PM.
      1>Project "C:\openbr\app\Improving-User-Recognition-for-an-Augmented-Reality-Magic-Mirror\Kinect\Kinect\Kinect.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Release\Kinect.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -23,4 +23,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.78
+Time Elapsed 00:00:01.71

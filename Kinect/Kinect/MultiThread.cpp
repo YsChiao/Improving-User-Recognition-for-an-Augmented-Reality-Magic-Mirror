@@ -467,14 +467,10 @@ unsigned int __stdcall ReconstructMe (PVOID pM)
 	// Create ReconstructMe context
 	reme_context_t c;
 	reme_context_create(&c);
-	reme_context_compile(c);
+
 
 	reme_options_t o;
 	reme_options_create(c, &o);
-
-	// Create external sensor.
-	reme_sensor_t s;
-	reme_sensor_create(c, "external", false, &s);
 
 	//// Create empty options binding
 	//reme_context_set_log_callback(c, reme_default_log_callback, 0);
@@ -483,15 +479,31 @@ unsigned int __stdcall ReconstructMe (PVOID pM)
 	reme_context_bind_reconstruction_options(c, o);
 	reme_options_set_int(c, o, "device_id", 0);
 
+	// Compile for OpenCL device using defaults
+	reme_options_set_int(c, o, "volume.minimum_corner.x", -1000);
+	reme_options_set_int(c, o, "volume.minimum_corner.y", -1000);
+	reme_options_set_int(c, o, "volume.minimum_corner.z", -1000);
+	reme_options_set_int(c, o, "volume.maximum_corner.x", 1000);
+	reme_options_set_int(c, o, "volume.maximum_corner.y", 1000);
+	reme_options_set_int(c, o, "volume.maximum_corner.z", 1000);
+	reme_options_set_int(c, o, "volume.resolution.x", 256);
+	reme_options_set_int(c, o, "volume.resolution.y", 256);
+	reme_options_set_int(c, o, "volume.resolution.z", 256);
+
+	// Compile for OpenCL device using defaults
+	reme_context_tune_reconstruction_options(c, REME_TUNE_PROFILE_MID_QUALITY);
+	reme_context_compile(c);
+
+	// Create external sensor.
+	reme_sensor_t s;
+	reme_sensor_create(c, "external", false, &s);
+
 	// Retrieve num_slices
 	int num_slices;
 	//OK(reme_context_bind_reconstruction_options(c, o));
 	OK(reme_options_get_int(c, o, "volume.resolution.z", &num_slices));
 	const void *bytes;
 	int length;
-
-	// Compile for OpenCL device using defaults
-	reme_context_tune_reconstruction_options(c, REME_TUNE_PROFILE_LOW_QUALITY);
 
 
 	// Since we are using an external sensor, we need to tell ReMe about its image size field of view.
