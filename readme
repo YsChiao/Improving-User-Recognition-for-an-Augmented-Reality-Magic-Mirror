@@ -1,1 +1,5 @@
-using OpenBR to detect user's gender and age at first by input by kinect. 
+using OpenBR and ReconstructMe to detect user's information
+1. Gender and Age
+2. Heihgt
+3. 3D Volume
+4. Waist circumference, hips circumference and chest circumference
