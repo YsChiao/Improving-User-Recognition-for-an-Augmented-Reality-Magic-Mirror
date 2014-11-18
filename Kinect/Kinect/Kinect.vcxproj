@@ -81,6 +81,7 @@
     <ClCompile Include="OpenNIShow.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="volume.cpp" />
+    <ClCompile Include="volumeBrowe.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="depth1.oni" />

@@ -94,7 +94,7 @@
 //	int load_buffer_length = 0;
 //	int count = 0;
 //
-//	FILE *f = fopen("volume.bin", "rb");
+//	FILE *f = fopen("volume2.bin", "rb");
 //	for (int i = 0; i < num_slices; i++) 
 //	{
 //		fread(&length, sizeof(int), 1, f);
@@ -119,7 +119,7 @@
 //		cout << load_buffer[0] << " " <<  count << " ";
 //		count ++;
 //
-//		Mat videoFrame(512, 512, CV_32SC1, load_buffer);
+//		Mat videoFrame(256, 256, CV_32SC1, load_buffer);
 //		normalize(videoFrame, videoFrame, 0, 255, NORM_MINMAX, CV_8UC3);
 //		namedWindow( "Display window", CV_WINDOW_AUTOSIZE );         // Create a window for display.
 //		imshow( "Display window", videoFrame );                   // Show our image inside it.

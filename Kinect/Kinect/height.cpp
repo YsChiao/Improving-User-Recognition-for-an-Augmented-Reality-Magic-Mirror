@@ -27,8 +27,8 @@
 //
 //	// o3. Open Device
 //	Device  mDevice;
-//	//mDevice.open( "depth1.oni" );
-//	mDevice.open(ANY_DEVICE);
+//	mDevice.open( "depth1.oni" );
+//	//mDevice.open(ANY_DEVICE);
 //
 //	// o4. create depth stream
 //	VideoStream mDepthStream;
