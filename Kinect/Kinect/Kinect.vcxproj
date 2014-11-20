@@ -84,6 +84,10 @@
     <ClCompile Include="volumeBrowe.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="1.bin" />
+    <None Include="1.ply" />
+    <None Include="2.bin" />
+    <None Include="2.ply" />
     <None Include="depth1.oni" />
     <None Include="depth2.oni" />
     <None Include="depth3.oni" />

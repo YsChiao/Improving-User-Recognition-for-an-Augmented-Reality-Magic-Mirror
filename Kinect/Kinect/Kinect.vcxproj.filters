@@ -53,5 +53,17 @@
     <None Include="depth3.oni">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="1.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="1.ply">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="2.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="2.ply">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -9,10 +9,7 @@
 //#include <iostream>
 //#include <OpenNI.h>
 //
-//
 //using namespace std;
-//
-//
 //
 //int main (int argc, char** argv)
 //{
@@ -25,12 +22,12 @@
 //	reme_options_t o;
 //	reme_options_create(c, &o);
 //
-//	// sensor configurations, returns the first working one. By default
-//	// each sensor works on the first volume created.
-//	reme_sensor_t s;
-//	reme_sensor_create(c, "openni;mskinect;file", true, &s);
-//	reme_sensor_open(c, s);
-//	reme_sensor_set_prescan_position(c, s, REME_SENSOR_POSITION_INFRONT);
+//	//// sensor configurations, returns the first working one. By default
+//	//// each sensor works on the first volume created.
+//	//reme_sensor_t s;
+//	//reme_sensor_create(c, "openni;mskinect;file", true, &s);
+//	//reme_sensor_open(c, s);
+//	//reme_sensor_set_prescan_position(c, s, REME_SENSOR_POSITION_INFRONT);
 //
 //
 //	// Create a new volume
@@ -81,20 +78,22 @@
 //		reme_volume_slice_set_bytes(c, v, i, load_buffer, length);
 //	}
 //
-//	//// Create a new surface
-//	//reme_surface_t m;
-//	//reme_surface_create(c, &m);
-//	//reme_surface_generate(c, m, v);
+//	// Create a new surface
+//	reme_surface_t m;
+//	reme_surface_create(c, &m);
+//	reme_surface_generate(c, m, v);
 //
-//	//// Visualize resulting surface
-//	//reme_viewer_t viewer_surface;
-//	//reme_viewer_create_surface(c, m, "This is ReconstructMeSDK", &viewer_surface);
-//	//reme_viewer_wait(c, viewer_surface);
-//	//reme_surface_destroy(c, &m);
+//	// Visualize result of surface
+//	reme_viewer_t viewer_surface;
+//	reme_viewer_create_surface(c, m, "This is ReconstructMeSDK", &viewer_surface);
+//	reme_viewer_wait(c, viewer_surface);
+//	reme_surface_destroy(c, &m);
 //
-//	reme_viewer_t viewer;
-//	reme_viewer_create_volume(c, v, s, "My volume viewer", &viewer);
-//	reme_viewer_wait(c, viewer);
+//
+//	//// Visualize result of volume
+//	//reme_viewer_t viewer;
+//	//reme_viewer_create_volume(c, v, s, "My volume viewer", &viewer);
+//	//reme_viewer_wait(c, viewer);
 //
 //
 //	// Make sure to release all memory acquired
